@@ -379,7 +379,7 @@ struct sensor_regulator {
 };
 #endif
 
-struct sensor_regulator lis3dh_acc_vreg  = {
+struct sensor_regulator lis3dh_acc_vreg [] = {
 	{NULL, "vdd", 1700000, 3600000},
 	{NULL, "vddio", 1700000, 3600000},
 };
