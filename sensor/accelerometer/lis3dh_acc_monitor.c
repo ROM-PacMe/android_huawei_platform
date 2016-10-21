@@ -47,6 +47,51 @@ static struct dsm_client *lis3dh_gs_dclient = NULL;
 static int lis_dump_gsensor_info (int type, void *buff, int size);
 static ssize_t lis_gsensor_report_dsm_err(int type,bool auto_report_flag);
 
+#ifndef CONFIG_HUAWEI_KERNEL
+struct lis3dh_acc_data {
+	struct i2c_client *client;
+	struct lis3dh_acc_platform_data *pdata;
+	struct lis3dh_acc_vreg *vreg;
+	struct lis3dh_dsm_operation *operation;
+	struct excep_work *work;
+	struct sensors_classdev cdev;
+	struct sensorDT_mode *dt_mode;
+	struct pinctrl *pinctrl;
+	struct pinctrl_state *pin_default;
+	struct pinctrl_state *pin_sleep;
+
+		struct mutex lock;
+	struct delayed_work input_work;
+
+	struct input_dev *input_dev;
+
+	int hw_initialized;
+	/* hw_working=-1 means not tested yet */
+	int hw_working;
+	/* flag sensor is enabled (batch/poll) */
+	atomic_t enabled;
+	int on_before_suspend;
+
+	u8 sensitivity;
+
+	u8 resume_state[RESUME_ENTRIES];
+
+	/* batch mode is configured */
+	bool use_batch;
+	unsigned int delay_ms;
+	unsigned int batch_mode;
+	unsigned int fifo_timeout_ms;
+	unsigned int flush_count;
+	int irq1;
+	int irq2;
+
+#ifdef DEBUG
+	u8 reg_addr;
+#endif
+
+};
+#endif
+
 /* add gsensor dump_func */
 static struct dsm_client_ops gs_ops={
 	.poll_state = NULL,

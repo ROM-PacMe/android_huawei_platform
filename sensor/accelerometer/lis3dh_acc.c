@@ -308,7 +308,11 @@ struct odr_config_table lis3dh_acc_odr_table[] = {
 struct lis3dh_acc_data {
 	struct i2c_client *client;
 	struct lis3dh_acc_platform_data *pdata;
+	struct lis3dh_acc_vreg *vreg;
+	struct lis3dh_dsm_operation *operation;
+	struct excep_work *work;
 	struct sensors_classdev cdev;
+	struct sensorDT_mode *dt_mode;
 	struct pinctrl *pinctrl;
 	struct pinctrl_state *pin_default;
 	struct pinctrl_state *pin_sleep;
@@ -375,7 +379,7 @@ struct sensor_regulator {
 };
 #endif
 
-struct sensor_regulator lis3dh_acc_vreg[] = {
+struct sensor_regulator lis3dh_acc_vreg  = {
 	{NULL, "vdd", 1700000, 3600000},
 	{NULL, "vddio", 1700000, 3600000},
 };
