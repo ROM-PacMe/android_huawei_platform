@@ -312,6 +312,7 @@ struct lis3dh_acc_data {
 	struct lis3dh_dsm_operation *operation;
 	struct excep_work *work;
 	struct sensors_classdev cdev;
+	struct sensor_regulator *regulator;
 	struct sensorDT_mode *dt_mode;
 	struct pinctrl *pinctrl;
 	struct pinctrl_state *pin_default;
